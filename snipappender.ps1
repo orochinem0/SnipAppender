@@ -16,9 +16,10 @@ Function Register-Watcher {
         $name = $Event.SourceEventArgs.Name
         $changeType = $Event.SourceEventArgs.ChangeType
         $timeStamp = $Event.TimeGenerated
-        Write-Host "The file $name was $changeType at $timeStamp"
-        $text = (Get-Content $file_r) + (Get-Content $file_w)
+        $text = (Get-Content $file_r) + "Current Music: " + (Get-Content $file_w) + " - "
         Set-Content -Path $file_c -Value $text
+        Write-Host "The file $name was $changeType at $timeStamp"
+        Write-Host $text
     ')
 
     Register-ObjectEvent $Watcher "Changed" -Action $changeAction
